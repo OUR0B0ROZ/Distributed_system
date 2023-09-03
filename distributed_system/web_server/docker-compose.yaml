@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+
+  postgresql-master:
+    image: 'docker.io/bitnami/postgresql:11-debian-10'
+    container_name: postgres-master
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgresql_master_data:/bitnami/postgresql'
+    environment:
+      POSTGRESQL_PGAUDIT_LOG: READ,WRITE
+      POSTGRESQL_LOG_HOSTNAME: 1
+      POSTGRESQL_REPLICATION_MODE: master
+      POSTGRESQL_REPLICATION_USER: repl_user
+      POSTGRESQL_REPLICATION_PASSWORD: repl_password
+      POSTGRESQL_USERNAME: postgres
+      POSTGRESQL_DATABASE: my_database
+      ALLOW_EMPTY_PASSWORD: 1
+
+  postgresql-slave:
+    image: 'docker.io/bitnami/postgresql:11-debian-10'
+    container_name: postgres-slave
+    ports:
+      - '5433:5432'
+    depends_on:
+      - postgresql-master
+    environment:
+      POSTGRESQL_USERNAME: postgres
+      ALLOW_EMPTY_PASSWORD: 1
+      POSTGRESQL_MASTER_HOST: postgresql-master
+      POSTGRESQL_PGAUDIT_LOG: READ,WRITE
+      POSTGRESQL_LOG_HOSTNAME: 1
+      POSTGRESQL_REPLICATION_MODE: slave
+      POSTGRESQL_REPLICATION_USER: repl_user
+      POSTGRESQL_REPLICATION_PASSWORD: repl_password
+      POSTGRESQL_MASTER_PORT_NUMBER: 5432
+
+  web:
+    build:
+      context: .
+    container_name: web-server
+    ports:
+      - '8000:8000'
+    depends_on:
+      - postgresql-master
+      - postgresql-slave
+    environment:
+      DJANGO_DB_HOST_MASTER: postgresql-master
+      DJANGO_DB_PORT_MASTER: 5432
+      DJANGO_DB_NAME_MASTER: my_database
+      DJANGO_DB_USER_MASTER: postgres
+      DJANGO_DB_PASSWORD_MASTER: ""
+      DJANGO_DB_HOST_SLAVE: postgresql-slave
+      DJANGO_DB_PORT_SLAVE: 5432
+      DJANGO_DB_NAME_SLAVE: my_database
+      DJANGO_DB_USER_SLAVE: postgres
+      DJANGO_DB_PASSWORD_SLAVE: ""
+volumes:
+  postgresql_master_data:
+    driver: local
