@@ -25,7 +25,7 @@ SECRET_KEY = 'wjl^8)xwy^zr1%7rq6ss6ot=-wd&jfrl63gtnc03s))d@-2ox5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'index.apps.IndexConfig',
 ]
 
 MIDDLEWARE = [
@@ -72,8 +73,6 @@ WSGI_APPLICATION = 'web_server.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-import os
 
 DATABASES = {
    
