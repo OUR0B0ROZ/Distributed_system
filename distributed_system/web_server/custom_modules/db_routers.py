@@ -3,7 +3,7 @@ class AuthRouter:
     A router to control all database operations on models in the
     auth and contenttypes applications.
     """
-    route_app_labels = {"auth", "contenttypes","sessions","admin"}
+    route_app_labels = {"auth", "contenttypes","sessions","admin","index"}
     def db_for_read(self, model, **hints):
         """
         Attempts to read auth and contenttypes models go to auth_db.
@@ -40,3 +40,4 @@ class AuthRouter:
         if app_label in self.route_app_labels:
             return db == "master"
         return None
+    
