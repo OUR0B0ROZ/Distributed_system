@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import IndexView,ModelDetailView
+from .views import ModelListView, ModelDetailView
 
 app_name = 'index'
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
-     path('<slug:slug>/', ModelDetailView.as_view(), name='model-detail'),
+    path('', ModelListView.as_view(), name='model-list'),
+    path('<slug:slug>/', ModelDetailView.as_view(), name='model-detail'),  # Ensure that the name is 'model-detail'
 ]
