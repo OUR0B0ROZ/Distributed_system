@@ -9,5 +9,11 @@
     <h1>Index</h1>
     <p>Este es un indice para la plantilla basica de una pagina web 
         la cual es un modelo estandar </p>
+        <h1>Model List</h1>
+    <ul>
+        {% for model in model_list %}
+            <li><a href="{% url 'model-detail' model.slug %}">{{ model.title }}</a></li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
