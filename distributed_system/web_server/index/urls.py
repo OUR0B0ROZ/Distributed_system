@@ -5,5 +5,5 @@ app_name = 'index'
 
 urlpatterns = [
     path('', ModelListView.as_view(), name='model-list'),
-    path('<slug:slug>/', ModelDetailView.as_view(), name='model-detail'),  # Ensure that the name is 'model-detail'
+    path('<slug:slug>/', ModelDetailView.as_view(), name='detail'),  # Ensure that the name is 'model-detail'
 ]

@@ -12,8 +12,7 @@
         <h1>Model List</h1>
     <ul>
         {% for model in model_list %}
-        <li><a href="{% url 'model-detail' slug=model.slug %}">{{ model.title }}</a></li>
-
+        <li><a href="{% url 'index:detail' slug=model.slug %}">{{ model.title }}</a></li>
         {% endfor %}
     </ul>
 </body>
