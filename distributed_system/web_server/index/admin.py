@@ -8,7 +8,7 @@ class SubjectAdmin(admin.ModelAdmin):
 
 @admin.register(ModelTest)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'created']
+    list_display = ['title', 'category', 'created','code']
     list_filter = ['created', 'category']
     search_fields = ['title', 'body']
     prepopulated_fields = {'slug': ('title',)}
