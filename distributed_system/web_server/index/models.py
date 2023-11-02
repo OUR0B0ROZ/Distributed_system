@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from .code_generator import generate_code
 from django.contrib.auth.models import User
+from django.urls import reverse
 # Create your models here.
 
 class Category(models.Model):
@@ -40,4 +41,6 @@ class ModelTest(models.Model):
             self.slug = slugify(self.title)
 
         super(ModelTest, self).save(*args, **kwargs)
+    #def get_absolute_url(self):
+     #return reverse('detail', args=[str(self.object.pk)])
 

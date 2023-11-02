@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  {% extends "index/base.html" %}
+<head>
+    <title>{% if form.instance.pk %}Edit ModelTest{% else %}Create ModelTest{% endif %}</title>
+</head>
+
+<body>
+{% block content %}
+  <h2>Confirm Deletion</h2>
+  <p>Are you sure you want to delete "{{ modeltest.title }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+    <a href="{% url 'index:model-list' %}">Cancel</a>
+  </form>
+{% endblock %}
+</body>
+</html>

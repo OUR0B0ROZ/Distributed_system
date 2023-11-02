@@ -1,19 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-</head>
+{% extends "index/base.html" %}
+{% block content %}    
+<title>Index</title>
 <body>
     <h1>Index</h1>
     <p>Este es un indice para la plantilla basica de una pagina web 
         la cual es un modelo estandar </p>
         <h1>Model List</h1>
+        <a href="{% url 'index:modeltest-create' %}" class="btn btn-primary">Create ModelTest</a>
     <ul>
-        {% for model in model_list %}
-        <li><a href="{% url 'index:detail' slug=model.slug %}">{{ model.title }}</a></li>
+        {% for model in model %}
+        <td>
+        <li> 
+        <a href="{% url 'index:detail' pk=model.pk %}"> {{ model.title }}</a></li>
+        <a href="{% url 'index:modeltest-update' model.pk %}" class="btn btn-info">Edit</a>
+        <a href="{% url 'index:modeltest-delete' model.pk %}" class="btn btn-danger">Delete</a>
+        </td>
+
+
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %} 
+
