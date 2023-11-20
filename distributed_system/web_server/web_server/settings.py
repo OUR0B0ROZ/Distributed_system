@@ -37,7 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #Local apps
     'index.apps.IndexConfig',
+
+     # Allauth  apps
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',  # Include any social account providers you want to use
+    # ...
 ]
 
 MIDDLEWARE = [
@@ -141,3 +151,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 DATABASE_ROUTERS = ['custom_modules.db_routers.AuthRouter']
+
+SITE_ID = 1
+
+LOGIN_URL = '/login/'
+
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+# settings.py
+

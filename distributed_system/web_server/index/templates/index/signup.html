@@ -1,0 +1,20 @@
+{% extends "base_index.html" %}
+
+{% block content %}
+    <div class="container">
+        <h2>Sign up</h2>
+        {% if user.is_authenticated %}
+            <p>You are already logged in as {{ user.username }}</p>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.username.label_tag }} {{ form.username }}
+                {{ form.email.label_tag }} {{ form.email }}
+                {{ form.password1.label_tag }} {{ form.password1 }}
+                {{ form.password2.label_tag }} {{ form.password2 }}
+                <button type="submit">Sign up</button>
+            </form>
+            <p>Already have an account? <a href="{% url 'index:login' %}">Login</a></p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "index/base_index.html" %}
+
+{% block content %}
+    <div class="container">
+        <h2>Login</h2>
+        <a href="{% url 'index:model-list' %}">Lista principal</a></p>
+        {% if user.is_authenticated %}
+            <p>You are already logged in as {{ user.username }}</p>
+        {% else %}
+            {% if no_permission_message %}
+                <p>{{ no_permission_message }}</p>
+            {% else %}
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endif %}
+            <h3>This is an init page</h3>
+        {% endif %}
+    </div>
+{% endblock %}

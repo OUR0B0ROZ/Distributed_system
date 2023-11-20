@@ -1,20 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "index/base_index.html" %}
+
+{% block content %}
     <title>Index</title>
 </head>
 <body>
+    {% if user.is_authenticated %}
+    <p>You are already logged in as {{ user.username }}</p>
+    {% else %}
+    {% endif %}
     <h1>Index</h1>
+    
     <p>Este es un indice para la plantilla basica de una pagina web 
         la cual es un modelo estandar </p>
         <h1>Model List</h1>
     <ul>
         {% for model in model_list %}
-        <li><a href="{% url 'model-detail' slug=model.slug %}">{{ model.title }}</a></li>
+        <li><a href="{% url 'index:model-detail' slug=model.slug %}">{{ model.title }}</a></li>
 
         {% endfor %}
     </ul>
-</body>
-</html>
+    {% endblock %}

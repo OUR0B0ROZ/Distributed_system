@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- your head content -->
+</head>
+<body>
+    <header>
+
+    </header>
+
+    <main>
+        <h1>Acciones disponibles </h1>
+        <a href="{% url 'index:model-list' %}">Lista principal</a></p>
+        <a href="{% url 'index:login' %}">Login</a></p>
+        <a href="{% url 'index:logout' %}">Logout</a></p>
+        <a href="{% url 'index:initpage' %}">Pagina incio</a></p>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <!-- Footer content -->
+    </footer>
+</body>
+</html>
