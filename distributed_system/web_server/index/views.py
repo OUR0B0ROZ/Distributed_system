@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
-from django.views.generic import ListView
+from django.views.generic import ListView,View, TemplateView
 from .models import ModelTest
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
@@ -13,6 +12,7 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin
     )
 from django.http import HttpResponseRedirect
+
 # Create your views here.
 
 
@@ -41,8 +41,22 @@ class ModelListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'index/model_list.html'
     context_object_name = 'model_list'
     permission_required = 'index.view_modeltest'
-    
+    login_url = reverse_lazy('index:redirect')  # Ajusta la URL a la que quieres redirigir
+
+    def handle_no_permission(self):
+        if self.raise_exception:
+            # Si raise_exception es True, se levanta una excepción
+            raise PermissionDenied(self.get_permission_denied_message())
+        # Si raise_exception es False, se realiza una redirección a la URL especificada en login_url
+        return HttpResponseRedirect(self.login_url)
+
+class RedirectView(View):
+    template_name = 'index/redirect.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)  
 class ModelDetailView(DetailView):
     model = ModelTest  # Set the model to 'ModelTest'
     template_name = 'index/model_detail.html'  # Specify the template for the detail view
     context_object_name = 'model'  # Name of the variable to use in the template
+
