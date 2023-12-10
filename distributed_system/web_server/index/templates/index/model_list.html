@@ -10,10 +10,86 @@
     <p>Este es un indice para la plantilla basica de una pagina web 
         la cual es un modelo estandar </p>
         <h1>Model List</h1>
-    <ul>
-        {% for model in model_list %}
-        <li><a href="{% url 'index:detail' slug=model.slug %}">{{ model.title }}</a></li>
+<!-- Add this form at the top of your model_list.html template -->
+<form method="get" action="">
+    <label for="sort_option">Sort Option:</label>
+    <select name="sort_option" id="sort_option" onchange="this.form.submit()">
+        <option value="numerical" {% if sort_option == 'numerical' %}selected{% endif %}>Numerical</option>
+        <option value="alphabetical" {% if sort_option == 'alphabetical' %}selected{% endif %}>Alphabetical</option>
+    </select>
+
+    <label for="category_filter">Filter by Category:</label>
+    <select name="category_filter" id="category_filter" onchange="this.form.submit()">
+        <option value="" {% if not category_filter %}selected{% endif %}>All Categories</option>
+        {% for category in categories %}
+            <option value="{{ category.slug }}" {% if category_filter == category.slug %}selected{% endif %}>
+                {{ category.title }}
+            </option>
         {% endfor %}
-    </ul>
+    </select>
+
+</form>
+
+<!-- Display selected category as an h2 heading -->
+{% if selected_category %}
+    <h2>Selected Category: {{ selected_category.title }}</h2>
+{% else %}
+    <h2>All Categories</h2>
+{% endif %}
+
+
+<!-- Add the following styles to position the lists -->
+<style>
+    .model-list-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .model-list {
+        width: 48%; /* Adjust as needed */
+        border: 1px solid #ccc; /* Add borders for clarity */
+        padding: 10px;
+        margin: 5px;
+        box-sizing: border-box;
+    }
+</style>
+
+<!-- Rest of the template -->
+<div class="model-list-container">
+    <div class="model-list">
+        <h2>Approved Models</h2>
+        {% for model in model_list %}
+            {% if model.status == 'approved' %}
+                <p>
+                    {% if sort_option == 'numerical' %}
+                        {% if model.creation_year %}Year: {{ model.creation_year }}<br>{% endif %}
+                        <a href="{% url 'index:detail' slug=model.slug %}">- {{ model.title }}</a></li>
+                    {% elif sort_option == 'alphabetical' %}
+                        {% if model.initial %}Initial: {{ model.initial }}<br>{% endif %}
+                        <a href="{% url 'index:detail' slug=model.slug %}">- {{ model.title }}</a></li>
+                    {% endif %}
+                </p>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="model-list">
+        <h2>Models Under Review</h2>
+        {% for model in model_list %}
+            {% if model.status == 'under_review' %}
+                <p>
+                    {% if sort_option == 'numerical' %}
+                        {% if model.creation_year %}Year: {{ model.creation_year }}<br>{% endif %}
+                        <a href="{% url 'index:detail' slug=model.slug %}">- {{ model.title }}</a></li>
+                    {% elif sort_option == 'alphabetical' %}
+                        {% if model.initial %}Initial: {{ model.initial }}<br>{% endif %}
+                        <a href="{% url 'index:detail' slug=model.slug %}">- {{ model.title }}</a></li>
+                    {% endif %}
+                </p>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
 </body>
 </html>
